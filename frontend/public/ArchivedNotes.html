@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notas Archivadas</title>
+  <link rel="stylesheet" href="../src/App.css">
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f2f2f2;
+    }
+
+    /* Contenedor principal */
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
+
+    /* Encabezado */
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    /* Formulario */
+    form {
+      width: 100%;
+    }
+
+    /* Etiquetas */
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    /* Inputs */
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* Botones */
+    button[type="submit"],
+    button {
+      width: 100%;
+      padding: 15px 0;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo de botones al pasar el mouse */
+    button[type="submit"]:hover,
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Estilos para los mensajes de éxito y error */
+    #successMessage {
+        text-align: center;
+        margin-top: 10px;
+        color: green; /* Cambio de color a verde */
+      }
+
+      #errorMessage{
+        text-align: center;
+        margin-top: 10px;
+        color: red; /* Mantenemos el color rojo para los mensajes de error */
+      }
+
+    /* Estilo para cada nota */
+    .note {
+      background-color: #f9f9f9; /* Color de fondo para cada nota */
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Estilo para el título de la nota */
+    .note h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    /* Estilo para el contenido de la nota */
+    .note p {
+      margin-top: 0;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <h2>Notas Archivadas</h2>
+
+    <ul id="archivedNotes">
+      <!-- Aquí se cargarán las notas archivadas desde la base de datos -->
+    </ul>
+
+    <!-- Menú de Navegación -->
+    <div class="menu">
+      <button onclick="window.location.href='home.html'">Volver al Menú Principal</button>
+    </div>
+
+  </div>
+
+  <script>
+    // Cargar las notas archivadas al cargar la página
+    window.onload = function() {
+      loadArchivedNotes();
+    };
+
+    function loadArchivedNotes() {
+      fetch("http://localhost:3000/notes/archived")
+        .then(response => response.json())
+        .then(data => {
+          const archivedNotes = document.getElementById("archivedNotes");
+          // Limpiar la lista de notas
+          archivedNotes.innerHTML = "";
+          // Iterar sobre las notas y agregarlas a la lista
+          data.forEach(note => {
+            const noteItem = document.createElement("li");
+            noteItem.classList.add("note");
+            noteItem.innerHTML = `
+              <h3>${note.title}</h3>
+              <p>${note.content}</p>
+            `;
+            archivedNotes.appendChild(noteItem);
+          });
+        })
+        .catch(error => console.error("Error:", error));
+    }
+  </script>
+</body>
+</html>

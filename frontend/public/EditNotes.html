@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Nota</title>
+  <link rel="stylesheet" href="../src/App.css">
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f2f2f2;
+    }
+
+    /* Contenedor principal */
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
+
+    /* Encabezado */
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    /* Formulario */
+    form {
+      width: 100%;
+    }
+
+    /* Etiquetas */
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    /* Inputs */
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* Botones */
+    button[type="submit"],
+    button {
+      width: 100%;
+      padding: 15px 0;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo de botones al pasar el mouse */
+    button[type="submit"]:hover,
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Contenedor para centrar el botón */
+    .button-container {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <h2>Editar Nota</h2>
+    <form>
+      <label for="title">Título:</label>
+      <input type="text" id="title" name="title" value="Título de la Nota" required>
+      <label for="content">Contenido:</label>
+      <textarea id="content" name="content" required>Contenido de la Nota</textarea>
+      <div class="button-container">
+        <button type="submit">Guardar Cambios</button>
+        
+      </div>
+    </form>
+    <br>
+    <!-- Menú de Navegación -->
+    <div class="menu">
+      <button onclick="window.location.href='home.html'">Volver al Menú Principal</button>
+      
+    </div>
+  </div>
+</body>
+</html>

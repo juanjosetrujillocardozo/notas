@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eliminar Categoría</title>
+  <link rel="stylesheet" href="../src/App.css">
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f2f2f2;
+    }
+
+    /* Contenedor principal */
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
+
+    /* Encabezado */
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    /* Formulario */
+    form {
+      width: 100%;
+    }
+
+    /* Etiquetas */
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    /* Inputs */
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* Botones */
+    button[type="submit"],
+    button {
+      width: 100%;
+      padding: 15px 0;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo de botones al pasar el mouse */
+    button[type="submit"]:hover,
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Estilos para los mensajes de éxito y error */
+    #successMessage {
+        text-align: center;
+        margin-top: 10px;
+        color: green; /* Cambio de color a verde */
+      }
+
+      #errorMessage{
+        text-align: center;
+        margin-top: 10px;
+        color: red; /* Mantenemos el color rojo para los mensajes de error */
+      }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <h2>Eliminar Categoría</h2>
+    <form id="deleteForm">
+      <label for="categoryId">ID de la Categoría:</label>
+      <input type="text" id="categoryId" name="categoryId" required>
+      <button type="submit">Eliminar Categoría</button>
+    </form>
+
+    <br>
+    <!-- Menú de Navegación -->
+    <div class="menu">
+      <button onclick="window.location.href='home.html'">Volver al Menú Principal</button>
+    </div>
+
+    <p id="successMessage" style="display: none; text-align: center">
+      ¡Categoría Eliminada con éxito!
+    </p>
+    <p id="errorMessage" style="display: none; text-align: center">
+      Error al Eliminar la categoría. Por favor, intenta nuevamente o puede ser que ya esté eliminada esa categoría.
+    </p>
+  </div>
+
+  <script>
+    document.getElementById("deleteForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const categoryId = document.getElementById("categoryId").value;
+      deleteCategoryById(categoryId);
+    });
+
+    function deleteCategoryById(categoryId) {
+      fetch(`http://localhost:3000/categories/${categoryId}`, {
+        method: "DELETE"
+      })
+      .then(response => {
+        if (response.ok) {
+          showSuccessMessage("¡Categoría Eliminada con éxito!");
+        } else {
+          throw new Error("Error al eliminar la categoría");
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        showErrorMessage("Error al Eliminar la categoría. Por favor, intenta nuevamente o puede ser que ya esté eliminada esa categoría.");
+      });
+    }
+
+    function showSuccessMessage(message) {
+      hideAllMessages();
+      const successMessage = document.getElementById("successMessage");
+      successMessage.innerText = message;
+      successMessage.style.display = "block";
+    }
+
+    function showErrorMessage(message) {
+      hideAllMessages();
+      const errorMessage = document.getElementById("errorMessage");
+      errorMessage.innerText = message;
+      errorMessage.style.display = "block";
+    }
+
+    function hideAllMessages() {
+      document.getElementById("successMessage").style.display = "none";
+      document.getElementById("errorMessage").style.display = "none";
+    }
+  </script>
+</body>
+</html>

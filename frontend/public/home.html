@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notas</title>
+  <link rel="stylesheet" href="../src/App.css">
+  <style>
+    /* Estilos del menú */
+    .menu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .menu button {
+      margin: 10px;
+      padding: 15px 30px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f2f2f2;
+    }
+
+    /* Contenedor principal */
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
+
+    /* Encabezado */
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    /* Estilos para los mensajes de éxito y error */
+    #successMessage {
+      text-align: center;
+      margin-top: 10px;
+      color: green; /* Cambio de color a verde */
+      font-size: 18px; /* Aumento del tamaño del texto */
+    }
+
+    #errorMessage {
+      text-align: center;
+      margin-top: 10px;
+      color: red; /* Mantenemos el color rojo para los mensajes de error */
+      font-size: 18px; /* Aumento del tamaño del texto */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Menu Principal</h2>
+    <h3>Selecciona una opción para comenzar</h3>
+
+    <!-- Menú de Navegación -->
+    <div class="menu">
+      <button onclick="window.location.href='CreateNotes.html'">Crear, Editar , Consultar, Archivar y Asignar Categoria a Nota</button>
+      <button onclick="window.location.href='ActiveNotes.html'">Notas Activas</button>
+      <button onclick="window.location.href='ArchivedNotes.html'">Notas Archivadas</button>
+      <button onclick="window.location.href='RemoveNotes.html'">Eliminar Notas</button>
+      <hr size="10px" width="100%" noshade="noshade" />
+      <button onclick="window.location.href='RemoveCategories.html'">Eliminar Categorias</button>
+      <button onclick="window.location.href='EditNotes.html'">Filtrar Notas por Categoria</button>
+      <hr size="10px" width="100%" noshade="noshade" />
+      <button onclick="window.location.href='users.html'">Gestionar Usuarios</button>
+      <button onclick="window.location.href='index.html'">Cerrar Sesion</button>
+    </div>
+  </div>
+</body>
+</html>

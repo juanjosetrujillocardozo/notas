@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear, Editar , Consultar y Archivar Nota</title>
+  <link rel="stylesheet" href="../src/App.css" />
+  <script src="NoteCreate.js" defer></script>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f2f2f2;
+    }
+
+    /* Contenedor principal */
+    .container {
+      width: 90%;
+      max-width: 600px;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
+
+    /* Encabezado */
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    /* Formulario */
+    form {
+      width: 100%;
+    }
+
+    /* Etiquetas */
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    /* Inputs */
+    input[type="text"],
+    textarea {
+      width: calc(100% - 22px);
+      /* Ajuste del ancho del input */
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-left: 11px;
+      /* Centra el input */
+    }
+
+    /* Estilo para el select */
+    select {
+      appearance: none;
+      /* Elimina el estilo predeterminado del sistema operativo */
+      background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+      /* Agrega una flecha personalizada */
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      /* Alinea la flecha a la derecha y centra verticalmente */
+      padding-right: 30px;
+      /* Ajusta el espacio para la flecha */
+      -webkit-appearance: none;
+      /* Para navegadores basados en WebKit como Chrome y Safari */
+      -moz-appearance: none;
+      /* Para Firefox */
+    }
+
+    /* Botones */
+    button[type="submit"],
+    button,
+    .menu button {
+      width: 100%;
+      padding: 15px 0;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo de botones al pasar el mouse */
+    button[type="submit"]:hover,
+    button:hover,
+    .menu button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Contenedor para centrar el botón */
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      /* Cambio de dirección del contenedor */
+      align-items: center;
+      /* Alineación central de los botones */
+    }
+
+    /* Separación entre botones */
+    .menu button {
+      margin-bottom: 10px;
+    }
+
+    /* Estilos para los mensajes de éxito y error */
+    #successMessage,
+    #successMessageGet {
+      text-align: center;
+      margin-top: 10px;
+      color: green;
+      /* Cambio de color a verde */
+    }
+
+    #errorMessage,
+    #errorMessageGet {
+      text-align: center;
+      margin-top: 10px;
+      color: red;
+      /* Mantenemos el color rojo para los mensajes de error */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div id="noteId" style="text-align: center; font-weight: bold; margin-bottom: 20px"></div>
+    <h2>Crear, Editar , Consultar y Archivar Nota</h2>
+    <form id="noteForm">
+      <label for="noteIdInput">ID de la Nota:</label>
+      <input type="text" id="noteIdInput" name="noteId" placeholder="ID de la nota" style="background-color: #f2f2f2" />
+
+      <button type="button" id="consultButton">Consultar</button>
+
+      <br />
+      <br />
+      <label for="title">Título:</label>
+      <input type="text" id="title" name="title" placeholder="Introduce el título de la nota" required />
+      <label for="content">Contenido:</label>
+      <textarea id="content" name="content" placeholder="Escribe el contenido de la nota" required></textarea>
+      <label for="archived">Archivar:</label>
+      <select id="archived" name="archived">
+        <option value="false">No</option>
+        <option value="true">Sí</option>
+      </select>
+      <br />
+      <br />
+
+      <label for="noteCategory">Categoría:</label>
+        <select id="noteCategory" name="noteCategory">
+            <!-- Opciones de categorías se agregarán dinámicamente -->
+        </select>
+
+
+
+
+      <div class="button-container">
+        <br />
+        <button type="button" id="updateButton">Actualizar</button>
+        <br />
+        <button type="submit">Crear</button>
+        <br />
+        <button onclick="clearInputs(); window.location.href='home.html'">
+          Volver al Menú Principal
+        </button>
+      </div>
+    </form>
+    <p id="successMessage" style="display: none; text-align: center">
+      ¡Nota Creada con éxito!
+    </p>
+    <p id="errorMessage" style="display: none; text-align: center">
+      Error al Crear la nota. Por favor, intenta nuevamente.
+    </p>
+    <p id="errorMessageGet" style="display: none; text-align: center">
+      No se encontró la nota con el ID especificado.
+    </p>
+    <p id="successMessageGet" style="display: none; text-align: center">
+      ¡Nota Actualizada con éxito!
+    </p>
+
+  </div>
+
+  <script>
+    document
+      .getElementById("noteForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+        const title = document.getElementById("title").value;
+        const content = document.getElementById("content").value;
+        const archived = document.getElementById("archived").value;
+        const newNote = { title, content, archived };
+
+        fetch("http://localhost:3000/notes", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newNote),
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error("Error al crear la nota");
+            }
+          })
+          .then((data) => {
+            hideAllMessages(); // Ocultar todos los mensajes antes de mostrar el mensaje de éxito
+            document.getElementById("noteIdInput").value = data.id; // Cargar automáticamente el ID de la nota en el input
+            // Mostrar el ID de la nota en el elemento HTML correspondiente
+
+            document.getElementById(
+              "noteId"
+            ).innerText = `ID de la nota: ${data.id}`;
+
+            document.getElementById("successMessage").style.display = "block";
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            hideAllMessages();
+            document.getElementById("errorMessage").style.display = "block";
+          });
+      });
+
+    // Agregar evento al botón Consultar
+    document
+      .getElementById("consultButton")
+      .addEventListener("click", function () {
+        const noteId = document.getElementById("noteIdInput").value;
+
+        // Consultar la nota con el ID dado
+        fetch(`http://localhost:3000/notes/${noteId}`, {
+          method: "GET",
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error("Error al consultar la nota");
+            }
+          })
+          .then((data) => {
+            hideAllMessages();
+            // Llenar los campos de título, contenido y archivado con los valores de la nota consultada
+            document.getElementById("title").value = data.title;
+            document.getElementById("content").value = data.content;
+            document.getElementById("archived").value =
+              data.archived.toString();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            // Manejar el error en caso de que la nota no sea encontrada
+            hideAllMessages(); // Ocultar todos los mensajes antes de mostrar el mensaje de éxito
+            document.getElementById("errorMessageGet").style.display =
+              "block";
+          });
+      });
+
+    document
+      .getElementById("updateButton")
+      .addEventListener("click", function () {
+        const noteId = document.getElementById("noteIdInput").value;
+        const title = document.getElementById("title").value;
+        const content = document.getElementById("content").value;
+        const archived = document.getElementById("archived").value;
+
+        const updatedNote = { title, content, archived };
+
+        fetch(`http://localhost:3000/notes/${noteId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedNote),
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error("Error al actualizar la nota");
+            }
+          })
+          .then((data) => {
+            hideAllMessages(); // Ocultar todos los mensajes antes de mostrar el mensaje de éxito
+            document.getElementById("successMessageGet").style.display = "block";
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            hideAllMessages(); // Ocultar todos los mensajes antes de mostrar el mensaje de éxito
+            document.getElementById("errorMessageGet").style.display = "block";
+          });
+      });
+
+// Función para cargar las categorías disponibles al cargar la página
+document.addEventListener("DOMContentLoaded", function () {
+        fetchCategories();
+    });
+
+    // Función para obtener y cargar las categorías disponibles desde el backend
+    function fetchCategories() {
+        fetch("http://localhost:3000/categories/all")
+            .then(response => response.json())
+            .then(categories => {
+                const selectElement = document.getElementById("noteCategory");
+                categories.forEach(category => {
+                    const option = document.createElement("option");
+                    option.value = category.id;
+                    option.textContent = category.name;
+                    selectElement.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error al obtener las categorías:", error));
+    }
+
+    
+        
+    
+
+    // Función para ocultar todos los mensajes
+    function hideAllMessages() {
+      document.getElementById("successMessage").style.display = "none";
+      document.getElementById("errorMessage").style.display = "none";
+      document.getElementById("successMessageGet").style.display = "none";
+      document.getElementById("errorMessageGet").style.display = "none";
+    }
+
+    function clearInputs() {
+      document.getElementById("noteIdInput").value = "";
+      document.getElementById("title").value = "";
+      document.getElementById("content").value = "";
+      document.getElementById("archived").value = "false";
+      document.getElementById("noteCategory").selectedIndex = 0; // Reiniciar la selección de categoría
+    }
+  </script>
+</body>
+
+</html>
